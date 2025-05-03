@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:treesense/features/auth/presentation/Widgets/Login_button.dart';
+import 'package:treesense/features/auth/presentation/Widgets/email_field.dart';
+import 'package:treesense/features/auth/presentation/Widgets/password_field.dart';
 import '/shared/utils/app_utils.dart';
 import '/core/theme/font_conf.dart';
 import './login_controller.dart';
 import '/core/theme/app_theme.dart';
+
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
@@ -53,36 +57,12 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 style: AppTextStyles.titleStyle,
               ),
               const SizedBox(height: 40),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  MessageLoader.get('username'),
-                  style: AppTextStyles.bodyTextStyle,
-                ),
-              ),
-              TextField(
-                controller: _emailCtrl,
-                decoration: InputDecoration(
-                  hintText: MessageLoader.get('username'),
-                ),
-              ),
+              EmailField(_emailCtrl),
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  MessageLoader.get('password'),
-                  style: AppTextStyles.bodyTextStyle,
-                ),
-              ),
-              TextField(
-                controller: _passwordCtrl,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: MessageLoader.get('password'),
-                ),
-              ),
+              LoginPassword(_passwordCtrl),
               const SizedBox(height: 24),
-              SizedBox(
+              LoginButton(emailController: _emailCtrl, passwordController: _passwordCtrl),
+              /* SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -94,13 +74,13 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                           _emailCtrl.text,
                           _passwordCtrl.text,
                         );
-                  },
+                  }, 
                   child: Text(
                     MessageLoader.get('login_title'),
                     style: AppTextStyles.BottomTextStyle,
                   ),
                 ),
-              ),
+              ), */
               const SizedBox(height: 20),
               state.when(
                 data: (user) => Text('Bienvenido ${user.email}'),

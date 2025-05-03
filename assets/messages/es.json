@@ -3,6 +3,7 @@
     "login_title": "Login",
     "login_description": "Inicie sesión con su cuenta de TreeSense",
     "username": "Nombre de Usuario",
+    "email": "Correo Electrónico",
     "password": "Contraseña",
     "error_loading_app": "Error al cargar la aplicación"
     
