@@ -1,5 +1,3 @@
-// presentation/providers/login_provider.dart
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/features/auth/infrastructure/datasources/auth_datasource.dart';
 import 'package:treesense/features/auth/infrastructure/repositories/auth_repository_impl.dart';

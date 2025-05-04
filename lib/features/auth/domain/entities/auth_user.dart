@@ -1,6 +1,7 @@
-class AuthUser {
-  final String id;
-  final String email;
-
-  const AuthUser({required this.id, required this.email});
+abstract class AuthUser {
+  String get email;
+  String get accessToken;
+  String get refreshToken;
+  
+  Map<String, dynamic> toJson();
 }

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:treesense/config/api_config.dart';
+
 abstract class AuthDatasource {
   Future<Map<String, dynamic>> login(String email, String password);
 }
@@ -5,8 +9,21 @@ abstract class AuthDatasource {
 class AuthDatasourceImpl implements AuthDatasource {
   @override
   Future<Map<String, dynamic>> login(String email, String password) async {
-    // Aquí se simula la llamada a la API
-    await Future.delayed(Duration(seconds: 1));
-    return {'id': '123', 'email': email}; // Simula una respuesta de la API
+    final url = Uri.parse('${ApiConfig.baseUrl}/user/login');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to login. Status: ${response.statusCode}');
+    }
   }
 }

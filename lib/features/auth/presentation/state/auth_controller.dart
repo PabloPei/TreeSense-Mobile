@@ -4,15 +4,15 @@ import 'package:treesense/features/auth/domain/entities/auth_user.dart';
 import 'package:treesense/features/auth/domain/usecases/login_user.dart';
 
 
-final loginControllerProvider = StateNotifierProvider<LoginController, AsyncValue<AuthUser>>((ref) {
+final loginControllerProvider = StateNotifierProvider<LoginController, AsyncValue<AuthUser?>>((ref) {
   final loginUseCase = ref.read(loginUserProvider);
   return LoginController(loginUseCase);
 });
 
-class LoginController extends StateNotifier<AsyncValue<AuthUser>> {
+class LoginController extends StateNotifier<AsyncValue<AuthUser?>> {
   final LoginUser loginUser;
 
-  LoginController(this.loginUser) : super(const AsyncValue.loading());
+  LoginController(this.loginUser) : super(const AsyncValue.data(null));
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();
