@@ -1,47 +1,64 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:treesense/core/theme/app_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:treesense/features/tree/presentation/widgets/tree_data_step.dart';
+import 'package:treesense/features/tree/infrastructure/models/tree_impl.dart';
+import 'package:treesense/features/tree/presentation/widgets/tree_image_step.dart';
+import 'package:treesense/features/tree/presentation/widgets/tree_summary_step.dart';
+import 'package:treesense/features/tree/presentation/state/tree_provider.dart';
 
+class TreeCensusForm extends ConsumerStatefulWidget {
+  const TreeCensusForm({super.key});
 
-class TreeCensusForm extends StatefulWidget {
   @override
-  _TreeCensusFormState createState() => _TreeCensusFormState();
+  TreeCensusFormState createState() => TreeCensusFormState();
 }
 
-class _TreeCensusFormState extends State<TreeCensusForm> {
+class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
   int _currentStep = 0;
   final _formKey = GlobalKey<FormState>();
 
-  String? _species;
-  double? _height;
-  double? _diameter;
-  int? _age;
-  File? _imageFile;
+  Future<void> _continue() async {
+    if (_currentStep == 0) {
+      if (_formKey.currentState?.validate() ?? false) {
+        _formKey.currentState?.save();
 
-  final picker = ImagePicker();
+        // Obtener los valores del formulario desde el estado del controlador
+        final treeController = ref.read(treeCensusControllerProvider.notifier);
+        final species = treeController.getSpecies;
+        final height = treeController.getHeight;
+        final diameter = treeController.getDiameter;
+        final age = treeController.getAge;
 
-  Future<void> _pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
+        // Crear el objeto Tree con los datos del formulario
+        final tree = TreeImpl(
+          species: species,
+          height: height,
+          diameter: diameter,
+          age: age,
+        );
+
+        // Asignar los datos del árbol al controlador
+        treeController.setTreeData(tree);
+      } else {
+        return; // Si el formulario no es válido, no continuar
+      }
     }
-  }
 
-  void _continue() {
-    if (_currentStep == 0 && _formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      setState(() => _currentStep += 1);
-    } else if (_currentStep < 2) {
-      setState(() => _currentStep += 1);
-    } else {
+    if (_currentStep == 2) {
+      final saveTreeUseCase = ref.read(treeCensusControllerProvider.notifier);
+
+      String responseMessage;
+      try {
+        responseMessage = await saveTreeUseCase.saveTree();
+      } catch (e) {
+        responseMessage = 'Error al guardar datos: ${e.toString()}';
+      }
+
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Carga Finalizada'),
-          content: Text('Datos guardados correctamente.'),
+          title: Text('Resultado de la Carga'),
+          content: Text(responseMessage),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -50,12 +67,18 @@ class _TreeCensusFormState extends State<TreeCensusForm> {
           ],
         ),
       );
+    } else {
+      setState(() {
+        _currentStep++;
+      });
     }
   }
 
   void _cancel() {
     if (_currentStep > 0) {
-      setState(() => _currentStep -= 1);
+      setState(() {
+        _currentStep--;
+      });
     }
   }
 
@@ -107,126 +130,18 @@ class _TreeCensusFormState extends State<TreeCensusForm> {
             ),
           );
         },
-
         steps: [
           Step(
-            state: _currentStep > 0 ? StepState.complete : StepState.indexed,
             title: Text('Datos'),
-            isActive: _currentStep >= 0,
-            content: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Especie',
-                      contentPadding: const EdgeInsets.only(left: 30),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    onSaved: (value) => _species = value,
-                    validator: (value) =>
-                        value == null || value.isEmpty ? 'Requerido' : null,
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Altura Estimada (m)',
-                      contentPadding: const EdgeInsets.only(left: 30),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onSaved: (value) => _height = double.tryParse(value!),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Diámetro Estimado (m)',
-                      contentPadding: const EdgeInsets.only(left: 30),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onSaved: (value) => _diameter = double.tryParse(value!),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Edad Estimada (años)',
-                      contentPadding: const EdgeInsets.only(left: 30),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onSaved: (value) => _age = int.tryParse(value!),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
+            content: TreeDataStep(formKey: _formKey),
           ),
           Step(
-            state: _currentStep > 1 ? StepState.complete : StepState.indexed,
             title: Text('Imagen'),
-            isActive: _currentStep >= 1,
-            content: Column(
-              children: [
-                Image.asset(
-                  'assets/images/Censo.png',
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: _pickImage,
-                  icon: Icon(Icons.camera_alt),
-                  label: Text('Subir foto'),
-                ),
-                if (_imageFile != null)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.file(_imageFile!),
-                  ),
-              ],
-            ),
+            content: TreeImageStep(),
           ),
           Step(
-            state: StepState.indexed,
             title: Text('Resumen'),
-            isActive: _currentStep >= 2,
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Especie: $_species'),
-                SizedBox(height: 10),
-                Text('Altura: ${_height ?? '-'} m'),
-                SizedBox(height: 10),
-                Text('Diámetro: ${_diameter ?? '-'} m'),
-                SizedBox(height: 10),
-                Text('Edad: ${_age ?? '-'} años'),
-                SizedBox(height: 10),
-                _imageFile != null
-                    ? Image.file(_imageFile!, height: 100)
-                    : Text('No se cargó imagen'),
-              ],
-            ),
+            content: TreeSummaryStep(),
           ),
         ],
       ),
