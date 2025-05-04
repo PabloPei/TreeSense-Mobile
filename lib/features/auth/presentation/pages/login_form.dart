@@ -62,31 +62,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               LoginPassword(_passwordCtrl),
               const SizedBox(height: 24),
               LoginButton(emailController: _emailCtrl, passwordController: _passwordCtrl),
-              /* SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primarySeedColor,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                  ),
-                  onPressed: () {
-                    ref.read(loginControllerProvider.notifier).login(
-                          _emailCtrl.text,
-                          _passwordCtrl.text,
-                        );
-                  }, 
-                  child: Text(
-                    MessageLoader.get('login_title'),
-                    style: AppTextStyles.BottomTextStyle,
-                  ),
-                ),
-              ), */
-              const SizedBox(height: 20),
-              state.when(
-                data: (user) => Text('Bienvenido ${user.email}'),
-                loading: () => const CircularProgressIndicator(),
-                error: (e, _) => Text('Error: $e'),
-              ),
+              const SizedBox(height: 20)
             ],
           ),
         ),

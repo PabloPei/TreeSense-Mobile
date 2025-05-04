@@ -2,9 +2,11 @@
     "app_title": "TreeSense",
     "login_title": "Login",
     "login_description": "Inicie sesión con su cuenta de TreeSense",
+    "login_button": "Iniciar Sesión",
     "username": "Nombre de Usuario",
     "email": "Correo Electrónico",
     "password": "Contraseña",
-    "error_loading_app": "Error al cargar la aplicación"
+    "error_loading_app": "Error al cargar la aplicación",
+    "error_empty_email_password": "El correo y la contraseña son obligatorios"
     
 }

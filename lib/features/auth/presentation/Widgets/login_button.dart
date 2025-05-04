@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:treesense/features/tree/presentation/pages/tree_form.dart';
-
+import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/core/theme/font_conf.dart';
+import 'package:treesense/core/theme/app_theme.dart';
 
 class LoginButton extends StatelessWidget {
   final TextEditingController emailController;
@@ -21,8 +23,8 @@ class LoginButton extends StatelessWidget {
 
         if (email.isEmpty || password.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("El correo y la contraseña son obligatorios"),
+            SnackBar(
+              content: Text(MessageLoader.get('error_empty_email_password')),
             ),
           );
           return;
@@ -38,12 +40,12 @@ class LoginButton extends StatelessWidget {
               
       },
       style: ElevatedButton.styleFrom(
-     
+        backgroundColor: primarySeedColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
       ),
-      child: const Text("Iniciar sesión", style: TextStyle(fontWeight: FontWeight.bold ),),
+      child: Text(MessageLoader.get('login_button'), style: AppTextStyles.BottomTextStyle, ),
     );
   }
 }
