@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/features/auth/presentation/Widgets/Login_button.dart';
 import 'package:treesense/features/auth/presentation/Widgets/email_field.dart';
 import 'package:treesense/features/auth/presentation/Widgets/password_field.dart';
-import '/shared/utils/app_utils.dart';
-import '/core/theme/font_conf.dart';
-import './login_controller.dart';
-import '/core/theme/app_theme.dart';
+import 'package:treesense/features/auth/presentation/state/auth_controller.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/core/theme/font_conf.dart';
+import 'package:treesense/core/theme/app_theme.dart';
 
 
 class LoginForm extends ConsumerStatefulWidget {

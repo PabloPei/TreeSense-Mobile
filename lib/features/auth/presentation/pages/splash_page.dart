@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-import '/shared/utils/app_utils.dart';
-import '/core/theme/font_conf.dart';
+import 'package:treesense/features/auth/presentation/pages/login_page.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/core/theme/font_conf.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

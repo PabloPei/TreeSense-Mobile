@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './login_form.dart';
+import 'package:treesense/features/auth/presentation/pages/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

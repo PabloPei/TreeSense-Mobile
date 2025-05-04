@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'features/auth/presentation/splash_page.dart';
+import 'features/auth/presentation/pages/splash_page.dart';
 import '/core/theme/app_theme.dart';
 import '/shared/utils/app_utils.dart';
 
