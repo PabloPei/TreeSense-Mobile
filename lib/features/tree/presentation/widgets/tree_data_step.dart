@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treesense/features/tree/presentation/state/tree_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
 
 class TreeDataStep extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
@@ -10,39 +10,81 @@ class TreeDataStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final speciesAsync = ref.watch(treeSpeciesProvider);
+    final selectedSpecies =
+        ref.watch(treeCensusControllerProvider).treeData?.species;
+
     return Form(
       key: formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Especie'),
-            onSaved: (value) =>
-                ref.read(treeCensusControllerProvider.notifier).setSpecies(value!),
-            validator: (value) => value?.isEmpty ?? true ? 'Requerido' : null,
+          speciesAsync.when(
+            data: (speciesList) {
+              return DropdownButtonFormField<String>(
+                value:
+                    speciesList.contains(selectedSpecies)
+                        ? selectedSpecies
+                        : null,
+                decoration: InputDecoration(
+                  labelText: MessageLoader.get("save_tree_form_species"),
+                ),
+                items:
+                    speciesList.map((species) {
+                      return DropdownMenuItem<String>(
+                        value: species,
+                        child: Text(species),
+                      );
+                    }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    ref
+                        .read(treeCensusControllerProvider.notifier)
+                        .updateTreeData(species: value);
+                  }
+                },
+                validator:
+                    (value) => value == null ? 'Seleccione una especie' : null,
+              );
+            },
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (err, stack) => Text('Error al cargar especies: $err'),
           ),
           SizedBox(height: 20),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Altura Estimada (m)'),
+            decoration: InputDecoration(
+              labelText: MessageLoader.get("save_tree_form_height"),
+            ),
             keyboardType: TextInputType.number,
-            onSaved: (value) => ref
-                .read(treeCensusControllerProvider.notifier)
-                .setHeight(double.tryParse(value ?? '') ?? 0.0),
+            onChanged: (value) {
+              ref
+                  .read(treeCensusControllerProvider.notifier)
+                  .updateTreeData(height: double.tryParse(value) ?? 0.0);
+            },
           ),
           SizedBox(height: 20),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Diámetro Estimado (m)'),
+            decoration: InputDecoration(
+              labelText: MessageLoader.get("save_tree_form_diameter"),
+            ),
             keyboardType: TextInputType.number,
-            onSaved: (value) => ref
-                .read(treeCensusControllerProvider.notifier)
-                .setDiameter(double.tryParse(value ?? '')?? 0.0),
+            onChanged: (value) {
+              ref
+                  .read(treeCensusControllerProvider.notifier)
+                  .updateTreeData(diameter: double.tryParse(value) ?? 0.0);
+            },
           ),
           SizedBox(height: 20),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Edad Estimada (años)'),
+            decoration: InputDecoration(
+              labelText: MessageLoader.get("save_tree_form_age"),
+            ),
             keyboardType: TextInputType.number,
-            onSaved: (value) => ref
-                .read(treeCensusControllerProvider.notifier)
-                .setAge(int.tryParse(value ?? '') ?? 0),
+            onChanged: (value) {
+              ref
+                  .read(treeCensusControllerProvider.notifier)
+                  .updateTreeData(age: int.tryParse(value) ?? 0);
+            },
           ),
         ],
       ),

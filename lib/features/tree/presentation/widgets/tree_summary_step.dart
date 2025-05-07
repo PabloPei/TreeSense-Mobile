@@ -1,28 +1,40 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:treesense/features/tree/presentation/state/tree_provider.dart';
+import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
+import 'package:treesense/shared/utils/app_utils.dart' show MessageLoader;
 
 class TreeSummaryStep extends ConsumerWidget {
+  const TreeSummaryStep({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(treeCensusControllerProvider);
+    final data = state.treeData;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Especie: ${state.species ?? '-'}'),
+        Text(
+          '${MessageLoader.get("save_tree_form_species")}: ${data?.species ?? '-'}',
+        ),
         SizedBox(height: 10),
-        Text('Altura: ${state.height?.toStringAsFixed(2) ?? '-'} m'),
+        Text(
+          '${MessageLoader.get("save_tree_form_height")}: ${data?.height?.toStringAsFixed(2) ?? '-'} m',
+        ),
         SizedBox(height: 10),
-        Text('Diámetro: ${state.diameter?.toStringAsFixed(2) ?? '-'} m'),
+        Text(
+          '${MessageLoader.get("save_tree_form_diameter")}: ${data?.diameter?.toStringAsFixed(2) ?? '-'} m',
+        ),
         SizedBox(height: 10),
-        Text('Edad: ${state.age ?? '-'} años'),
+        Text(
+          '${MessageLoader.get("save_tree_form_age")}: ${data?.age ?? '-'} años',
+        ),
         SizedBox(height: 10),
-        state.image != null
-            ? Image.file(state.image!, height: 100)
-            : Text('No se cargó imagen'),
+        data?.imagePath != null
+            ? Image.file(File(data!.imagePath!), height: 100)
+            : Text(MessageLoader.get("save_tree_form_no_image")),
       ],
     );
   }
 }
-

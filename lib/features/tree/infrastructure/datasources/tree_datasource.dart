@@ -3,21 +3,20 @@ import 'package:http/http.dart' as http;
 import 'package:treesense/features/tree/domain/entities/tree.dart';
 import 'package:treesense/config/api_config.dart';
 import 'package:treesense/features/auth/infrastructure/storage/auth_storage.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
 
 class TreeDatasource {
-  final AuthStorage _authStorage = AuthStorage(); 
+  final AuthStorage _authStorage = AuthStorage();
 
   Future<String> saveTree(Tree data) async {
     final url = Uri.parse('${ApiConfig.baseUrl}/tree');
 
-    // Obtener el token de acceso
     final accessToken = await _authStorage.getAccessToken();
 
     if (accessToken == null) {
-      throw Exception('Token de acceso no disponible.');
+      throw Exception(MessageLoader.get('error_access_token'));
     }
 
-    // Crear el cuerpo de la solicitud
     final body = jsonEncode({
       "specie": data.species,
       "latitude": 20.20,
@@ -30,20 +29,51 @@ class TreeDatasource {
       "description": 'test',
     });
 
-    // Hacer la solicitud HTTP con el token de acceso en el encabezado Authorization
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $accessToken', // Agregar el token en el encabezado
+        'Authorization': 'Bearer $accessToken',
       },
       body: body,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return 'Árbol guardado correctamente';
+      return MessageLoader.get('tree_saved');
     } else {
-      throw Exception('Fallo al guardar árbol. ${response.statusCode}: ${response.body}');
+      throw Exception(
+        "${MessageLoader.get('error_tree_saved')} ${response.statusCode}: ${response.body}",
+      );
+    }
+  }
+
+  Future<List<String>> getSpecies() async {
+    final url = Uri.parse('${ApiConfig.baseUrl}/tree/species');
+
+    final accessToken = await _authStorage.getAccessToken();
+
+    if (accessToken == null) {
+      throw Exception(MessageLoader.get('error_access_token'));
+    }
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = jsonDecode(response.body);
+      final speciesIds =
+          jsonList.map((item) => item['treeSpecieId'] as String).toList();
+
+      return speciesIds;
+    } else {
+      throw Exception(
+        "${MessageLoader.get('error_tree_saved')} ${response.statusCode}: ${response.body}",
+      );
     }
   }
 }

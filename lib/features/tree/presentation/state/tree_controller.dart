@@ -1,112 +1,77 @@
-import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:treesense/features/tree/domain/entities/tree.dart';
 import 'package:treesense/features/tree/domain/usecases/save_tree.dart';
+import 'package:treesense/features/tree/presentation/state/tree_provider.dart';
+import 'package:treesense/features/tree/infrastructure/models/tree_impl.dart';
+import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 
-class TreeCensusState {
-  final int step;
-  final Tree? treeData;
-  final File? image;
-  final bool isLoading;
-  final String species;
-  final double height;
-  final double diameter;
-  final int age;
+final treeCensusControllerProvider =
+    StateNotifierProvider<TreeCensusController, TreeCensusState>((ref) {
+      final saveTreeUseCase = ref.read(saveTreeUseCaseProvider);
+      return TreeCensusController(saveTreeUseCase);
+    });
 
-  TreeCensusState({
-    this.step = 0,
-    this.treeData,
-    this.image,
-    this.isLoading = false,
-    this.species = '', // Valor predeterminado de cadena vacía si no se pasa
-    this.height = 0.0, // Valor predeterminado 0.0 si no se pasa
-    this.diameter = 0.0, // Valor predeterminado 0.0 si no se pasa
-    this.age = 0, // Valor predeterminado 0 si no se pasa
-  });
-
-  TreeCensusState copyWith({
-    int? step,
-    Tree? treeData,
-    File? image,
-    bool? isLoading,
-    String? species,
-    double? height,
-    double? diameter,
-    int? age,
-  }) {
-    return TreeCensusState(
-      step: step ?? this.step,
-      treeData: treeData ?? this.treeData,
-      image: image ?? this.image,
-      isLoading: isLoading ?? this.isLoading,
-      species: species ?? this.species,
-      height: height ?? this.height,
-      diameter: diameter ?? this.diameter,
-      age: age ?? this.age,
-    );
-  }
-}
+final treeSpeciesProvider = FutureProvider<List<String>>((ref) async {
+  final getSpeciesUseCase = ref.read(getSpeciesUseCaseProvider);
+  return await getSpeciesUseCase();
+});
 
 class TreeCensusController extends StateNotifier<TreeCensusState> {
   final SaveTree saveTreeData;
 
   TreeCensusController(this.saveTreeData) : super(TreeCensusState());
 
-  String get getSpecies => state.species; // No puede ser nulo
-  File? get getImage => state.image;
-  double get getHeight => state.height; // No puede ser nulo
-  double get getDiameter => state.diameter; // No puede ser nulo
-  int get getAge => state.age; // No puede ser nulo
-
   void nextStep() {
-    if (state.step < 2) {
-      state = state.copyWith(step: state.step + 1);
+    final nextIndex = TreeCensusFormStep.values.indexOf(state.step) + 1;
+    if (nextIndex < TreeCensusFormStep.values.length) {
+      state = state.copyWith(step: TreeCensusFormStep.values[nextIndex]);
     }
   }
 
   void previousStep() {
-    if (state.step > 0) {
-      state = state.copyWith(step: state.step - 1);
+    final prevIndex = TreeCensusFormStep.values.indexOf(state.step) - 1;
+    if (prevIndex >= 0) {
+      state = state.copyWith(step: TreeCensusFormStep.values[prevIndex]);
     }
   }
 
-  void setImage(File image) {
-    state = state.copyWith(image: image);
-  }
-
-  void setTreeData(Tree data) {
+  void setTreeData(TreeImpl data) {
     state = state.copyWith(treeData: data);
   }
 
-  // Setters para los campos del formulario
-  void setSpecies(String species) {
-    state = state.copyWith(species: species);
-  }
+  void updateTreeData({
+    String? species,
+    double? height,
+    double? diameter,
+    int? age,
+    String? imagePath,
+  }) {
+    final current = state.treeData;
+    if (current != null) {
+      if (species != null) current.setSpecies(species);
+      if (height != null) current.setHeight(height);
+      if (diameter != null) current.setDiameter(diameter);
+      if (age != null) current.setAge(age);
+      if (imagePath != null) current.setImagePath(imagePath);
 
-  void setHeight(double height) {
-    state = state.copyWith(height: height);
-  }
-
-  void setDiameter(double diameter) {
-    state = state.copyWith(diameter: diameter);
-  }
-
-  void setAge(int age) {
-    state = state.copyWith(age: age);
+      state = state.copyWith(treeData: current);
+    } else {
+      final newTree = TreeImpl(
+        species: species ?? '',
+        height: height ?? 0.0,
+        diameter: diameter ?? 0.0,
+        age: age ?? 0,
+        imagePath: imagePath,
+      );
+      state = state.copyWith(treeData: newTree);
+    }
   }
 
   Future<String> saveTree() async {
-    if (state.treeData == null) return 'No tree data available';
-
-    state = state.copyWith(isLoading: true);
     try {
-      final responseMessage = await saveTreeData(state.treeData!); // Llamamos al use case
-      state = state.copyWith(isLoading: false);
-
-      return responseMessage; // Aquí podrías actualizar el estado con el mensaje o pasarlo a la UI
+      final responseMessage = await saveTreeData(state.treeData!);
+      return responseMessage;
     } catch (e) {
-      state = state.copyWith(isLoading: false);
-      return 'Error al guardar árbol: ${e.toString()}';
+      return e.toString();
     }
   }
 }

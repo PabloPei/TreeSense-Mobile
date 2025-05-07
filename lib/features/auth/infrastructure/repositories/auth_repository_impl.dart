@@ -11,6 +11,6 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthUser> login(String email, String password) async {
     final json = await datasource.login(email, password);
-    return AuthUserModel.fromJson(json);
+    return AuthUserImpl.fromJson(json);
   }
 }

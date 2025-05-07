@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:treesense/features/auth/presentation/Widgets/Login_button.dart';
+import 'package:treesense/features/auth/presentation/Widgets/login_button.dart';
 import 'package:treesense/features/auth/presentation/Widgets/email_field.dart';
 import 'package:treesense/features/auth/presentation/Widgets/password_field.dart';
-import 'package:treesense/features/auth/presentation/state/auth_controller.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/core/theme/font_conf.dart';
-import 'package:treesense/core/theme/app_theme.dart';
 
+class LoginForm extends StatelessWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final VoidCallback onLogin;
+  final bool isLoading;
 
-class LoginForm extends ConsumerStatefulWidget {
-  const LoginForm({super.key});
-
-  @override
-  ConsumerState<LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends ConsumerState<LoginForm> {
-  final _emailCtrl = TextEditingController();
-  final _passwordCtrl = TextEditingController();
-  
+  const LoginForm({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.onLogin,
+    required this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
-
-    final state = ref.watch(loginControllerProvider);
-
     return SingleChildScrollView(
       child: Center(
         child: Padding(
@@ -35,10 +30,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             children: [
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  '<  Back',
-                  style: TextStyle(fontSize: 16),
-                ),
+                child: Text('<  Back', style: TextStyle(fontSize: 16)),
               ),
               const SizedBox(height: 40),
               Image.asset(
@@ -57,17 +49,16 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 style: AppTextStyles.titleStyle,
               ),
               const SizedBox(height: 40),
-              EmailField(_emailCtrl),
+              EmailField(emailController),
               const SizedBox(height: 20),
-              LoginPassword(_passwordCtrl),
+              LoginPassword(passwordController),
               const SizedBox(height: 24),
-              LoginButton(emailController: _emailCtrl, passwordController: _passwordCtrl),
-              const SizedBox(height: 20)
+              LoginButton(onPressed: onLogin, isLoading: isLoading),
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
     );
-    
   }
 }

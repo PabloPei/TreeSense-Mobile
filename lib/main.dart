@@ -5,8 +5,6 @@ import '/core/theme/app_theme.dart';
 import '/shared/utils/app_utils.dart';
 
 void main() async {
-
-  WidgetsFlutterBinding.ensureInitialized();
   await initializeApp();
 
   runApp(const ProviderScope(child: MyApp()));

@@ -1,63 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/features/auth/presentation/state/login_controller.dart';
 
-class LoginPassword extends StatefulWidget {
+class LoginPassword extends ConsumerStatefulWidget {
   final TextEditingController controller;
 
   const LoginPassword(this.controller, {super.key});
 
   @override
-  _LoginPasswordState createState() => _LoginPasswordState();
+  ConsumerState<LoginPassword> createState() => _LoginPasswordState();
 }
 
-class _LoginPasswordState extends State<LoginPassword> {
+class _LoginPasswordState extends ConsumerState<LoginPassword> {
   bool _obscureText = true;
-  late IconData _icon;
-
-  @override
-  void initState() {
-    super.initState();
-    _icon = Icons.visibility_off_outlined;
-  }
+  String? _errorText;
 
   void _toggleVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-      _icon = _obscureText
-          ? Icons.visibility_off_outlined
-          : Icons.visibility_outlined;
-    });
+    setState(() => _obscureText = !_obscureText);
+  }
+
+  String? _validatePassword(String value) {
+    if (value.trim().isEmpty) {
+      return MessageLoader.get('error_empty_password');
+    }
+    if (value.length < 8) {
+      return MessageLoader.get('error_length_password');
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return MessageLoader.get('error_uppercase_password');
+    }
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return MessageLoader.get('error_special_caracter_password');
+    }
+    return null;
+  }
+
+  void _handleValidation(String value) {
+    final error = _validatePassword(value);
+    final isValid = error == null;
+
+    setState(() => _errorText = error);
+
+    ref
+        .read(loginControllerProvider.notifier)
+        .setPasswordErrorMessage(_errorText);
+    ref.read(loginControllerProvider.notifier).setPasswordValid(isValid);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          controller: widget.controller,
-          obscureText: _obscureText,
-          decoration: InputDecoration(
-            labelText: MessageLoader.get('password'),
-            suffixIcon: GestureDetector(
-              onLongPress: _toggleVisibility,
-              onLongPressUp: _toggleVisibility,
-              child: Icon(_icon),
-            ),
-            fillColor: Colors.blueGrey[50],
-            filled: true,
-            contentPadding: const EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
+    return TextField(
+      controller: widget.controller,
+      obscureText: _obscureText,
+      onChanged: _handleValidation,
+      decoration: InputDecoration(
+        labelText: MessageLoader.get('password'),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
           ),
+          onPressed: _toggleVisibility,
         ),
-        const SizedBox(height: 8),
-        
-      ],
+        filled: true,
+        fillColor: Colors.blueGrey[50],
+        contentPadding: const EdgeInsets.only(left: 30),
+        errorText: _errorText,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
     );
   }
 }

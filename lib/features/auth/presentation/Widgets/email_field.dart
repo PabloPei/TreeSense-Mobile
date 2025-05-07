@@ -1,60 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/features/auth/presentation/state/login_controller.dart';
 
-class EmailField extends StatefulWidget {
+class EmailField extends ConsumerStatefulWidget {
   final TextEditingController controller;
 
   const EmailField(this.controller, {super.key});
 
   @override
-  _EmailFieldState createState() => _EmailFieldState();
+  ConsumerState<EmailField> createState() => _EmailFieldState();
 }
 
-class _EmailFieldState extends State<EmailField> {
+class _EmailFieldState extends ConsumerState<EmailField> {
   String? _errorText;
 
-  void _validateEmail() {
-    final email = widget.controller.text;
-    // Regex expression for email limitations. Email must have the shape of something@some-email.some-extension
-    const emailPattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
-    final regex = RegExp(emailPattern);
+  void _validateEmail(String email) {
+    const pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
+    final isValid = RegExp(pattern).hasMatch(email);
 
     setState(() {
       if (email.isEmpty) {
-        _errorText = 'El correo electrónico no puede estar vacío';
-      } else if (!regex.hasMatch(email)) {
-        _errorText = 'Formato de correo electrónico no válido';
+        _errorText = MessageLoader.get("error_empty_email");
+      } else if (!isValid) {
+        _errorText = MessageLoader.get("error_invalid_email");
       } else {
-        _errorText = null; // No error text if the format is valid
+        _errorText = null;
       }
     });
+
+    ref.read(loginControllerProvider.notifier).setEmailErrorMessage(_errorText);
+    ref.read(loginControllerProvider.notifier).setEmailValid(isValid);
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      //style: const TextStyle(color: Color.fromARGB(255, 14, 33, 65)),
       controller: widget.controller,
+      onChanged: _validateEmail,
       decoration: InputDecoration(
-        labelText: MessageLoader.get('username'),
-       // hintStyle: const TextStyle(
-           // color: Color.fromARGB(255, 82, 82, 82)), // Estilo del hintText
-       // fillColor: Colors.blueGrey[50],
+        labelText: MessageLoader.get('email'),
         filled: true,
         contentPadding: const EdgeInsets.only(left: 30),
         errorText: _errorText,
-        //errorStyle: const TextStyle(color: Color.fromARGB(255, 173, 51, 51)),
         enabledBorder: OutlineInputBorder(
-         // borderSide: const BorderSide(color: Color.fromARGB(255, 96, 139, 105)),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-         // borderSide: const BorderSide(color: Colors.blueGrey),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
-      //onChanged: (_) => _validateEmail(), SI ES EMAIL, PONERLO PARA QUE VALIDE FORMATO
     );
   }
 }
-

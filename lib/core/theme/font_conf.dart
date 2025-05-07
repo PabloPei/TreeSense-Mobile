@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppTextStyles {
-
   static const TextStyle titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -17,9 +16,20 @@ class AppTextStyles {
     fontWeight: FontWeight.w300,
   );
 
-  static const BottomTextStyle = TextStyle(
+  static const TextStyle bottomTextStyle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: Colors.white
+    color: Colors.white,
+  );
+
+  static const TextStyle errorTextStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: Colors.red,
+  );
+
+  static const TextStyle buttonNegativeTextStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
   );
 }

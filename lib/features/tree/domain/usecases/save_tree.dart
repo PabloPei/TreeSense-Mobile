@@ -7,11 +7,6 @@ class SaveTree {
   SaveTree(this.repository);
 
   Future<String> call(Tree tree) async {
-    try {
-      await repository.saveTree(tree);
-      return 'Árbol guardado correctamente';
-    } catch (e) {
-      return 'Error al guardar árbol: ${e.toString()}';
-    }
+    return await repository.saveTree(tree);
   }
 }
