@@ -48,7 +48,7 @@ class TreeDataStep extends ConsumerWidget {
               );
             },
             loading: () => Center(child: CircularProgressIndicator()),
-            error: (err, stack) => Text('Error al cargar especies: $err'),
+            error: (err, stack) => Text('$err'),
           ),
           SizedBox(height: 20),
           TextFormField(

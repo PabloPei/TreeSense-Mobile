@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ErrorUtils {
+class BlockErrorDialog {
   static void showErrorDialog(
     BuildContext context,
     String title,

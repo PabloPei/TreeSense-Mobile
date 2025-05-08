@@ -72,7 +72,7 @@ class TreeDatasource {
       return speciesIds;
     } else {
       throw Exception(
-        "${MessageLoader.get('error_tree_saved')} ${response.statusCode}: ${response.body}",
+        "${MessageLoader.get('error_retrieve_species')} ${response.statusCode}: ${response.body}",
       );
     }
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:treesense/features/auth/presentation/Widgets/login_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:treesense/features/auth/presentation/Widgets/login_form.dart';
 import 'package:treesense/features/auth/presentation/state/login_controller.dart';
-import 'package:treesense/features/tree/presentation/pages/tree_page.dart';
-import 'package:treesense/shared/utils/app_utils.dart';
-import 'package:treesense/shared/utils/error_messages.dart';
 import 'package:treesense/features/auth/presentation/state/login_state.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/shared/widgets/error_messages.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -28,22 +28,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final state = ref.read(loginControllerProvider);
 
     if (state.status == LoginStatus.failure) {
-      ErrorUtils.showErrorDialog(
+      BlockErrorDialog.showErrorDialog(
         context,
         MessageLoader.get('login_error'),
-
-        state.result.error.toString(),
+        state.result?.error?.toString() ?? 'Unknown error',
       );
     } else if (state.status == LoginStatus.authenticated) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const TreeCensusForm()),
-      );
+      if (context.mounted) {
+        context.go('/tree-census');
+      }
     } else {
-      ErrorUtils.showErrorDialog(
+      BlockErrorDialog.showErrorDialog(
         context,
         MessageLoader.get('login_error'),
-        '${state.emailErrorMessage}\n${state.passErrorMessage}',
+        '${state.emailErrorMessage ?? ''}\n${state.passErrorMessage ?? ''}',
       );
     }
   }

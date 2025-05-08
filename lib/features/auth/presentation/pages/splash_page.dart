@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:treesense/features/auth/presentation/pages/login_page.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/core/theme/font_conf.dart';
@@ -11,7 +12,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -47,18 +47,13 @@ class _SplashPageState extends State<SplashPage> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const LoginPage()),
-            );
+            context.go('/login');
           });
           return const SizedBox.shrink();
         }
 
         return Scaffold(
-          body: Center(
-            child: Text(MessageLoader.get('error_loading_app')),
-          ),
+          body: Center(child: Text(MessageLoader.get('error_loading_app'))),
         );
       },
     );

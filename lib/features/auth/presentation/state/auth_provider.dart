@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:treesense/features/auth/domain/repositories/auth_datasource.dart';
+import 'package:treesense/features/auth/domain/usecases/refresh_token.dart';
 import 'package:treesense/features/auth/infrastructure/datasources/auth_datasource.dart';
 import 'package:treesense/features/auth/infrastructure/repositories/auth_repository_impl.dart';
 import 'package:treesense/features/auth/domain/repositories/auth_repository.dart';
@@ -16,4 +18,9 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 final loginUserProvider = Provider<LoginUser>((ref) {
   final repo = ref.read(authRepositoryProvider);
   return LoginUser(repository: repo);
+});
+
+final RefreshTokenProvider = Provider<RefreshToken>((ref) {
+  final repo = ref.read(authRepositoryProvider);
+  return RefreshToken(repository: repo);
 });

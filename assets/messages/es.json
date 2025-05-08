@@ -33,5 +33,7 @@
     "error_empty_password": "La contraseña es obligatoria",
     "error_unkown": "Error desconocido",
     "error_access_token": "Error al obtener el token de acceso",
-    "error_tree_saved" : "Error al guardar el árbol"
+    "error_refresh_token": "Error al obtener el token de refresco",
+    "error_tree_saved" : "Error al guardar el árbol",
+    "error_retrieve_species": "Error al recuperar la lista de especies"
 }
