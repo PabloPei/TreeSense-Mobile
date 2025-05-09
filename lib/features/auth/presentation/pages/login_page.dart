@@ -35,7 +35,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       );
     } else if (state.status == LoginStatus.authenticated) {
       if (context.mounted) {
-        context.go('/tree-census');
+        context.go('/home');
       }
     } else {
       BlockErrorDialog.showErrorDialog(

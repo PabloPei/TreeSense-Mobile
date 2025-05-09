@@ -17,4 +17,9 @@ class TreeRepositoryImpl implements TreeRepository {
   Future<List<String>> getSpecies() async {
     return await datasource.getSpecies();
   }
+
+  @override
+  Future<List<Tree>> getUploadedTreeByUser() async {
+    return await datasource.getUploadedTreeByUser();
+  }
 }

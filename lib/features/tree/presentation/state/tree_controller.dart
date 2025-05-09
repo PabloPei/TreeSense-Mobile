@@ -1,18 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:treesense/features/tree/domain/entities/tree.dart';
 import 'package:treesense/features/tree/domain/usecases/save_tree.dart';
 import 'package:treesense/features/tree/presentation/state/tree_provider.dart';
 import 'package:treesense/features/tree/infrastructure/models/tree_impl.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 
 final treeCensusControllerProvider =
-    StateNotifierProvider<TreeCensusController, TreeCensusState>((ref) {
+    StateNotifierProvider.autoDispose<TreeCensusController, TreeCensusState>((
+      ref,
+    ) {
       final saveTreeUseCase = ref.read(saveTreeUseCaseProvider);
       return TreeCensusController(saveTreeUseCase);
     });
 
-final treeSpeciesProvider = FutureProvider<List<String>>((ref) async {
+final treeSpeciesProvider = AutoDisposeFutureProvider<List<String>>((
+  ref,
+) async {
   final getSpeciesUseCase = ref.read(getSpeciesUseCaseProvider);
   return await getSpeciesUseCase();
+});
+
+final treeUploadedByUser = AutoDisposeFutureProvider<List<Tree>>((ref) async {
+  final getUploadedTreeByUserUseCase = ref.read(getTreesUploadedByUser);
+  return await getUploadedTreeByUserUseCase();
 });
 
 class TreeCensusController extends StateNotifier<TreeCensusState> {
@@ -38,29 +48,35 @@ class TreeCensusController extends StateNotifier<TreeCensusState> {
     state = state.copyWith(treeData: data);
   }
 
+  void setStep(TreeCensusFormStep step) {
+    state = state.copyWith(step: step);
+  }
+
   void updateTreeData({
-    String? species,
+    String? specie,
     double? height,
     double? diameter,
     int? age,
     String? imagePath,
+    DateTime? createdAt,
   }) {
     final current = state.treeData;
     if (current != null) {
-      if (species != null) current.setSpecies(species);
+      if (specie != null) current.setSpecie(specie);
       if (height != null) current.setHeight(height);
       if (diameter != null) current.setDiameter(diameter);
       if (age != null) current.setAge(age);
       if (imagePath != null) current.setImagePath(imagePath);
-
+      if (createdAt != null) current.setCreatedAt(createdAt);
       state = state.copyWith(treeData: current);
     } else {
       final newTree = TreeImpl(
-        species: species ?? '',
+        specie: specie ?? '',
         height: height ?? 0.0,
         diameter: diameter ?? 0.0,
         age: age ?? 0,
         imagePath: imagePath,
+        createdAt: createdAt ?? DateTime.now(),
       );
       state = state.copyWith(treeData: newTree);
     }

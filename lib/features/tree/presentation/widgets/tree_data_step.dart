@@ -12,7 +12,7 @@ class TreeDataStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final speciesAsync = ref.watch(treeSpeciesProvider);
     final selectedSpecies =
-        ref.watch(treeCensusControllerProvider).treeData?.species;
+        ref.watch(treeCensusControllerProvider).treeData?.specie;
 
     return Form(
       key: formKey,
@@ -40,7 +40,7 @@ class TreeDataStep extends ConsumerWidget {
                   if (value != null) {
                     ref
                         .read(treeCensusControllerProvider.notifier)
-                        .updateTreeData(species: value);
+                        .updateTreeData(specie: value);
                   }
                 },
                 validator:
@@ -48,7 +48,7 @@ class TreeDataStep extends ConsumerWidget {
               );
             },
             loading: () => Center(child: CircularProgressIndicator()),
-            error: (err, stack) => Text('$err'),
+            error: (err, stack) => Text('Error al cargar especies: $err'),
           ),
           SizedBox(height: 20),
           TextFormField(

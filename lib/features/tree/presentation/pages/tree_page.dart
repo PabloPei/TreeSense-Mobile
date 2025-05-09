@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:treesense/core/theme/font_conf.dart';
 import 'package:treesense/features/tree/presentation/widgets/tree_data_step.dart';
 import 'package:treesense/features/tree/presentation/widgets/tree_image_step.dart';
@@ -20,6 +21,7 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
 
   Future<void> _continue() async {
     final treeController = ref.read(treeCensusControllerProvider.notifier);
+    bool failSavingTree = false;
 
     if (_formKey.currentState?.validate() ?? false) {
       if (ref.watch(treeCensusControllerProvider).step ==
@@ -29,8 +31,13 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
         String responseMessage;
         try {
           responseMessage = await saveTreeUseCase.saveTree();
+          // TODO: corregir esto, es un mal parche
+          if (responseMessage.toLowerCase().contains('error')) {
+            failSavingTree = true;
+          }
         } catch (e) {
           responseMessage = e.toString();
+          failSavingTree = true;
         }
 
         showDialog(
@@ -41,7 +48,13 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
                 content: Text(responseMessage),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      if (failSavingTree) {
+                        context.pop();
+                      } else {
+                        context.go('/home');
+                      }
+                    },
                     child: Text('OK'),
                   ),
                 ],

@@ -1,6 +1,6 @@
 import 'package:treesense/features/tree/infrastructure/models/tree_impl.dart';
 
-enum TreeCensusFormStep { image, overview, resume }
+enum TreeCensusFormStep { image, data, resume }
 
 class TreeCensusState {
   final TreeCensusFormStep step;

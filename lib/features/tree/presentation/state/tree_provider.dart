@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/features/tree/domain/usecases/get_species.dart';
+import 'package:treesense/features/tree/domain/usecases/get_uploaded_tree_byuser.dart';
 import 'package:treesense/features/tree/infrastructure/datasources/tree_datasource.dart';
 import 'package:treesense/features/tree/domain/repositories/tree_repository.dart';
 import 'package:treesense/features/tree/infrastructure/repositories/tree_repository_impl.dart';
@@ -22,4 +23,9 @@ final saveTreeUseCaseProvider = Provider<SaveTree>((ref) {
 final getSpeciesUseCaseProvider = Provider<GetSpecies>((ref) {
   final repository = ref.read(treeRepositoryProvider);
   return GetSpecies(repository);
+});
+
+final getTreesUploadedByUser = Provider<GetUploadedTreeByuser>((ref) {
+  final repository = ref.read(treeRepositoryProvider);
+  return GetUploadedTreeByuser(repository);
 });
