@@ -87,7 +87,7 @@ class TreeCensusController extends StateNotifier<TreeCensusState> {
       final responseMessage = await saveTreeData(state.treeData!);
       return responseMessage;
     } catch (e) {
-      return e.toString();
+      rethrow;
     }
   }
 }

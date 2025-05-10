@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
+import 'package:treesense/shared/widgets/error_messages.dart';
 
 class TreeDataStep extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
@@ -48,7 +49,12 @@ class TreeDataStep extends ConsumerWidget {
               );
             },
             loading: () => Center(child: CircularProgressIndicator()),
-            error: (err, stack) => Text('Error al cargar especies: $err'),
+            error: (error, stackTrace) {
+              return WarningMessage(
+                title: MessageLoader.get('error_retrieve_species'),
+                message: error.toString(),
+              );
+            },
           ),
           SizedBox(height: 20),
           TextFormField(

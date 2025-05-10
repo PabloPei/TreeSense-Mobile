@@ -31,7 +31,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       BlockErrorDialog.showErrorDialog(
         context,
         MessageLoader.get('login_error'),
-        state.result?.error?.toString() ?? 'Unknown error',
+        state.result?.error?.toString() ?? MessageLoader.get('error_unknow'),
       );
     } else if (state.status == LoginStatus.authenticated) {
       if (context.mounted) {

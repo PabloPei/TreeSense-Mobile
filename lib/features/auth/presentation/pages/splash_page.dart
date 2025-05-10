@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:treesense/features/auth/presentation/pages/login_page.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/core/theme/font_conf.dart';
 

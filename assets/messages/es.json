@@ -1,5 +1,5 @@
 {
-    "last_uploads": "Ultimas Cargas",
+    "last_uploads_title": "Ultimas Cargas",
     "app_title": "TreeSense",
     "login_title": "Login",
     "login_description": "Inicie sesión con su cuenta de TreeSense",
@@ -40,5 +40,6 @@
     "error_refresh_token": "Error al obtener el token de refresco",
     "error_tree_saved" : "Error al guardar el árbol",
     "error_retrieve_species": "Error al recuperar la lista de especies",
-    "error_get_last_upload": "Error al recuperar las ultimas cargas del usuario"
+    "error_get_last_upload": "Error al recuperar las ultimas cargas del usuario",
+    "error_unknow": "Error desconocido"
 }

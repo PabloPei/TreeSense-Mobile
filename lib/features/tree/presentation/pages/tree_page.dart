@@ -31,10 +31,6 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
         String responseMessage;
         try {
           responseMessage = await saveTreeUseCase.saveTree();
-          // TODO: corregir esto, es un mal parche
-          if (responseMessage.toLowerCase().contains('error')) {
-            failSavingTree = true;
-          }
         } catch (e) {
           responseMessage = e.toString();
           failSavingTree = true;
