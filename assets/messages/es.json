@@ -41,5 +41,7 @@
     "error_tree_saved" : "Error al guardar el árbol",
     "error_retrieve_species": "Error al recuperar la lista de especies",
     "error_get_last_upload": "Error al recuperar las ultimas cargas del usuario",
-    "error_unknow": "Error desconocido"
+    "error_unknow": "Error desconocido",
+    "user_profile_title": "Perfil de usuario",
+    "language": "Lenguaje"
 }

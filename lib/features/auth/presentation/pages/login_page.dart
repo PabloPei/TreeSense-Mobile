@@ -5,7 +5,7 @@ import 'package:treesense/features/auth/presentation/Widgets/login_form.dart';
 import 'package:treesense/features/auth/presentation/state/login_controller.dart';
 import 'package:treesense/features/auth/presentation/state/login_state.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
-import 'package:treesense/shared/widgets/error_messages.dart';
+import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

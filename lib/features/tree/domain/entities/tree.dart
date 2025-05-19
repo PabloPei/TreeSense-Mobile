@@ -1,5 +1,5 @@
 abstract class Tree {
-  String get specie;
+  String get species;
   double get height;
   double get diameter;
   DateTime get createdAt;

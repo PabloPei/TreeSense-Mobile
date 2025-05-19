@@ -9,23 +9,26 @@ class UserProfilePhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double size = radius * 5;
+
     return Container(
-      width: radius * 5,
-      height: radius * 5,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+      width: size,
+      height: size,
+      decoration: BoxDecoration(shape: BoxShape.circle),
       child: ClipOval(
         child:
             photo != null
                 ? Image.memory(
                   photo!,
                   fit: BoxFit.cover,
-                  width: radius * 5,
-                  height: radius * 5,
+                  width: size,
+                  height: size,
                 )
-                : Container(
-                  color: Colors.grey,
-                  alignment: Alignment.center,
-                  child: Icon(Icons.person, size: radius, color: Colors.grey),
+                : Image.asset(
+                  'assets/icons/user.png',
+                  fit: BoxFit.cover,
+                  width: size,
+                  height: size,
                 ),
       ),
     );

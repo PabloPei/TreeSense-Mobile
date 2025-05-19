@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
-import 'package:treesense/shared/widgets/error_messages.dart';
+import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 
 class TreeDataStep extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
@@ -13,7 +13,7 @@ class TreeDataStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final speciesAsync = ref.watch(treeSpeciesProvider);
     final selectedSpecies =
-        ref.watch(treeCensusControllerProvider).treeData?.specie;
+        ref.watch(treeCensusControllerProvider).treeData?.species;
 
     return Form(
       key: formKey,
@@ -41,7 +41,7 @@ class TreeDataStep extends ConsumerWidget {
                   if (value != null) {
                     ref
                         .read(treeCensusControllerProvider.notifier)
-                        .updateTreeData(specie: value);
+                        .updateTreeData(species: value);
                   }
                 },
                 validator:

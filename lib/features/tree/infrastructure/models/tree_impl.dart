@@ -2,7 +2,7 @@ import 'package:treesense/features/tree/domain/entities/tree.dart';
 
 class TreeImpl implements Tree {
   @override
-  String specie;
+  String species;
 
   @override
   double height;
@@ -20,7 +20,7 @@ class TreeImpl implements Tree {
   DateTime createdAt;
 
   TreeImpl({
-    required this.specie,
+    required this.species,
     required this.height,
     required this.diameter,
     required this.age,
@@ -30,7 +30,7 @@ class TreeImpl implements Tree {
 
   static TreeImpl fromJson(Map<String, dynamic> item) {
     return TreeImpl(
-      specie: item['specie'] ?? '',
+      species: item['species'] ?? '',
       height: (item['height'] as num).toDouble(),
       diameter: (item['diameter'] as num).toDouble(),
       age: item['age'] ?? 0,
@@ -40,7 +40,7 @@ class TreeImpl implements Tree {
     );
   }
 
-  void setSpecie(String specie) => this.specie = specie;
+  void setSpecies(String species) => this.species = species;
   void setHeight(double height) => this.height = height;
   void setDiameter(double diameter) => this.diameter = diameter;
   void setAge(int age) => this.age = age;
@@ -48,7 +48,7 @@ class TreeImpl implements Tree {
   void setCreatedAt(DateTime createdAt) => this.createdAt = createdAt;
 
   TreeImpl copyWith({
-    String? specie,
+    String? species,
     double? height,
     double? diameter,
     int? age,
@@ -56,7 +56,7 @@ class TreeImpl implements Tree {
     DateTime? createdAt,
   }) {
     return TreeImpl(
-      specie: specie ?? this.specie,
+      species: species ?? this.species,
       height: height ?? this.height,
       diameter: diameter ?? this.diameter,
       age: age ?? this.age,

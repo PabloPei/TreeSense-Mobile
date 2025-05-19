@@ -30,8 +30,7 @@ class WarningMessage extends StatelessWidget {
   final String title;
   final String message;
 
-  const WarningMessage({Key? key, required this.title, required this.message})
-    : super(key: key);
+  const WarningMessage({super.key, required this.title, required this.message});
 
   @override
   Widget build(BuildContext context) {

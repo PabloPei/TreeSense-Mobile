@@ -53,7 +53,7 @@ class TreeCensusController extends StateNotifier<TreeCensusState> {
   }
 
   void updateTreeData({
-    String? specie,
+    String? species,
     double? height,
     double? diameter,
     int? age,
@@ -62,7 +62,7 @@ class TreeCensusController extends StateNotifier<TreeCensusState> {
   }) {
     final current = state.treeData;
     if (current != null) {
-      if (specie != null) current.setSpecie(specie);
+      if (species != null) current.setSpecies(species);
       if (height != null) current.setHeight(height);
       if (diameter != null) current.setDiameter(diameter);
       if (age != null) current.setAge(age);
@@ -71,7 +71,7 @@ class TreeCensusController extends StateNotifier<TreeCensusState> {
       state = state.copyWith(treeData: current);
     } else {
       final newTree = TreeImpl(
-        specie: specie ?? '',
+        species: species ?? '',
         height: height ?? 0.0,
         diameter: diameter ?? 0.0,
         age: age ?? 0,

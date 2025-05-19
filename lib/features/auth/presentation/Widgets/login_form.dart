@@ -28,10 +28,6 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('<  Back', style: TextStyle(fontSize: 16)),
-              ),
               const SizedBox(height: 40),
               Image.asset(
                 'assets/logos/home_logo.png',

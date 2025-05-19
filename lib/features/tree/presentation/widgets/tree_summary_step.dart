@@ -16,7 +16,7 @@ class TreeSummaryStep extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${MessageLoader.get("save_tree_form_species")}: ${data?.specie ?? '-'}',
+          '${MessageLoader.get("save_tree_form_species")}: ${data?.species ?? '-'}',
         ),
         SizedBox(height: 10),
         Text(

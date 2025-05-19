@@ -10,11 +10,8 @@ class TreeCard extends StatelessWidget {
 
   const TreeCard({super.key, required this.tree});
 
-
   @override
   Widget build(BuildContext context) {
-
-    
     final DateFormat dateFormatted = DateFormat(dateFormatPattern);
 
     final formattedDate = dateFormatted.format(tree.createdAt);
@@ -22,9 +19,7 @@ class TreeCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(10.0),
       elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -36,13 +31,10 @@ class TreeCard extends StatelessWidget {
                   'assets/icons/tree.png',
                   width: 40,
                   height: 40,
-                  fit: BoxFit.cover, 
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  tree.specie,
-                  style: AppTextStyles.titleStyle,
-                ),
+                Text(tree.species, style: AppTextStyles.titleStyle),
               ],
             ),
             const SizedBox(height: 10),
@@ -57,7 +49,8 @@ class TreeCard extends StatelessWidget {
               style: AppTextStyles.bodyTextStyle,
             ),
             const SizedBox(height: 5),
-            Text('${MessageLoader.get('save_tree_form_age')}: ${tree.age} ',
+            Text(
+              '${MessageLoader.get('save_tree_form_age')}: ${tree.age} ',
               style: AppTextStyles.bodyTextStyle,
             ),
           ],

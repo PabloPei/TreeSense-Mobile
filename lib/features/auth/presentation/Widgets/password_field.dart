@@ -30,9 +30,9 @@ class _LoginPasswordState extends ConsumerState<LoginPassword> {
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
       return MessageLoader.get('error_uppercase_password');
     }
-    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return MessageLoader.get('error_special_caracter_password');
-    }
+    // if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+    //   return MessageLoader.get('error_special_caracter_password');
+    // }
     return null;
   }
 

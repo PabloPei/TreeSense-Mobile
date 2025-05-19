@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
-  static const TextStyle titleStyle = TextStyle(
+  static final TextStyle titleStyle = GoogleFonts.raleway(
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
@@ -31,5 +32,15 @@ class AppTextStyles {
   static const TextStyle buttonNegativeTextStyle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle userLabelStyle = GoogleFonts.quicksand(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle userValueStyle = GoogleFonts.quicksand(
+    fontSize: 18,
+    fontWeight: FontWeight.normal,
   );
 }

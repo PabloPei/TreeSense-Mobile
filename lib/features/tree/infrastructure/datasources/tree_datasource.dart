@@ -19,11 +19,11 @@ class TreeDatasource {
     }
 
     final body = jsonEncode({
-      "specie": data.specie,
+      "species": data.species,
       "latitude": 20.20,
       "longitude": 20.20,
       "state": 'Healthy',
-      "antique": data.age,
+      "age": data.age,
       "height": data.height,
       "diameter": data.diameter,
       "photoUrl": 'https://example.com/tree-photo.jpg',
@@ -68,7 +68,7 @@ class TreeDatasource {
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
       final speciesIds =
-          jsonList.map((item) => item['treeSpecieId'] as String).toList();
+          jsonList.map((item) => item['treeSpeciesId'] as String).toList();
 
       return speciesIds;
     } else {
