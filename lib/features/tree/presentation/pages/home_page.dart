@@ -7,8 +7,9 @@ import 'package:treesense/features/user/presentation/state/user_controller.dart'
 import 'package:treesense/features/user/presentation/widgets/user_photo.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:go_router/go_router.dart';
-import 'package:treesense/shared/widgets/error_messages.dart';
+import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 import 'package:treesense/core/theme/font_conf.dart';
+import 'package:treesense/core/theme/format.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -28,7 +29,17 @@ class HomePage extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  UserProfilePhoto(photo: userPhoto, radius: 30),
+                  GestureDetector(
+                    onTap: () => context.push('/profile'),
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey, width: 1),
+                      ),
+                      child: UserProfilePhoto(photo: userPhoto, radius: 30),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       if (context.mounted) {
@@ -39,7 +50,7 @@ class HomePage extends ConsumerWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primarySeedColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
                       ),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 52,
@@ -54,7 +65,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.md),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +85,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.xs),
 
               // Tree list
               Expanded(

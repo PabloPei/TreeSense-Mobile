@@ -38,3 +38,17 @@ class UserDatasourceImpl implements UserDatasource {
     }
   }
 }
+
+//TODO: borrar funcion de prueba
+class FakeUserDatasource implements UserDatasource {
+  @override
+  Future<User> getCurrentUser() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const UserImpl(
+      userName: 'Tomas Ej',
+      email: 'tomas@demo.com',
+      language: 'ES',
+      photo: null,
+    );
+  }
+}

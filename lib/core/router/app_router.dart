@@ -7,6 +7,7 @@ import 'package:treesense/features/auth/presentation/pages/splash_page.dart';
 import 'package:treesense/features/tree/presentation/pages/home_page.dart';
 import 'package:treesense/features/tree/presentation/pages/tree_page.dart';
 import 'package:treesense/features/auth/presentation/state/auth_provider.dart';
+import 'package:treesense/features/user/presentation/pages/user_profile_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -23,6 +24,10 @@ class AppRouter {
       GoRoute(
         path: '/tree-census',
         builder: (context, state) => const TreeCensusForm(),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const UserProfilePage(),
       ),
     ],
   );
