@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Future<void> showPhotoDialog({
   required BuildContext context,
   Uint8List? photo,
-  String placeholderAsset = 'assets/images/image_not_found_placeholder.jpg',
+  String placeholderAsset = 'assets/icons/image_not_found_placeholder.jpg',
 }) {
   return showGeneralDialog(
     context: context,

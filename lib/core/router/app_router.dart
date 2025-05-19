@@ -12,11 +12,12 @@ import 'package:treesense/features/user/presentation/pages/user_profile_page.dar
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: '/splash',
+    /*
     redirect: (context, state) async {
       final ref = ProviderScope.containerOf(context);
 
       return await AuthGuard.guardRoutes(context, state, ref);
-    },
+    },*/
     routes: [
       GoRoute(path: '/splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: '/home', builder: (context, state) => const HomePage()),

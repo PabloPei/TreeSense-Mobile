@@ -26,27 +26,26 @@ class HomePage extends ConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              // Top row: Profile photo + New Tree button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () => context.push('/profile'),
-                    child: Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey, width: 1),
+                  Tooltip(
+                    message: 'Ver perfil',
+                    child: GestureDetector(
+                      onTap: () => context.push('/profile'),
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.grey, width: 1),
+                        ),
+                        child: UserProfilePhoto(photo: userPhoto, radius: 30),
                       ),
-                      child: UserProfilePhoto(photo: userPhoto, radius: 30),
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      if (context.mounted) {
-                        context.go('/tree-census');
-                      }
-                    },
-
+                    onPressed: () => context.go('/tree-census'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primarySeedColor,
                       shape: RoundedRectangleBorder(
@@ -57,7 +56,6 @@ class HomePage extends ConsumerWidget {
                         vertical: 18,
                       ),
                     ),
-
                     child: Text(
                       MessageLoader.get('new_tree'),
                       style: AppTextStyles.bottomTextStyle,
@@ -67,27 +65,38 @@ class HomePage extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.md),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    MessageLoader.get('last_uploads_title'),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+              // Title: Últimas cargas + Filtro
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        MessageLoader.get('last_uploads_title'),
+                        style: AppTextStyles.titleStyle,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // Agregá lógica de filtro acá
-                    },
-                    icon: const Icon(Icons.filter_alt),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {
+                        // TODO: Agregá lógica de filtro acá
+                      },
+                      icon: const Icon(Icons.filter_list, color: Colors.grey),
+                      tooltip: 'Filtrar',
+                    ),
+                  ],
+                ),
               ),
+
               const SizedBox(height: AppSpacing.xs),
 
-              // Tree list
               Expanded(
                 child: treeListAsyncValue.when(
                   loading:
@@ -100,7 +109,10 @@ class HomePage extends ConsumerWidget {
                   data: (treeList) {
                     if (treeList.isEmpty) {
                       return Center(
-                        child: Text(MessageLoader.get('empty_upload_list')),
+                        child: Text(
+                          MessageLoader.get('empty_upload_list'),
+                          style: const TextStyle(color: Colors.grey),
+                        ),
                       );
                     }
                     return ListView.builder(

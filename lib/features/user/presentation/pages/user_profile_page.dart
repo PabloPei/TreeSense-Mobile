@@ -78,7 +78,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: goldBorderColor, width: 1),
+                      border: Border.all(color: primarySeedColor, width: 1),
                     ),
                     child: UserProfilePhoto(photo: user.photo, radius: 80),
                   ),
