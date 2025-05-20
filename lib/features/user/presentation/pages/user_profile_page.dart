@@ -29,9 +29,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left,
-          ), // Cambiá el ícono si querés otro
+          icon: const Icon(Icons.chevron_left),
           onPressed: () => context.pop(),
           tooltip: 'Volver',
         ),

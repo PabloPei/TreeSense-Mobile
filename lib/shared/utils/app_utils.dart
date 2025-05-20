@@ -27,3 +27,13 @@ Future<void> initializeApp() async {
     Future.delayed(const Duration(seconds: 3)), // TODO: Eliminar en producción
   ]);
 }
+
+/// Use this only for **visual display purposes**.
+/// Do NOT use the returned DateTime for time zone-sensitive operations like:
+/// - comparisons across time zones
+/// - sending data back to the backend
+/// - storing time-sensitive records.
+DateTime parsePreservingLocalTime(String isoString) {
+  final cleaned = isoString.replaceFirst(RegExp(r'(Z|[+-]\d{2}:\d{2})$'), '');
+  return DateTime.parse(cleaned);
+}

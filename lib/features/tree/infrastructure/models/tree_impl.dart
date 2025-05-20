@@ -1,4 +1,5 @@
 import 'package:treesense/features/tree/domain/entities/tree.dart';
+import 'package:treesense/shared/utils/app_utils.dart';
 
 class TreeImpl implements Tree {
   @override
@@ -29,13 +30,16 @@ class TreeImpl implements Tree {
   });
 
   static TreeImpl fromJson(Map<String, dynamic> item) {
+    //TODO: chequear robustez ante DateTimes con otro huso horario
     return TreeImpl(
       species: item['species'] ?? '',
       height: (item['height'] as num).toDouble(),
       diameter: (item['diameter'] as num).toDouble(),
       age: item['age'] ?? 0,
-      createdAt: DateTime.parse(
-        item['createdAt'] ?? DateTime.now().toIso8601String(),
+      createdAt: parsePreservingLocalTime(
+        item['createdAt'] ??
+            DateTime.now()
+                .toIso8601String(), // Only for visual display – do not use for timezone-aware logic
       ),
     );
   }

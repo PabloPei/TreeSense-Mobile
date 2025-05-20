@@ -4,6 +4,7 @@ import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/features/user/presentation/pages/user_profile_page.dart';
 import '/core/theme/app_theme.dart';
 
+//TODO: borrar en produccion
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MessageLoader.load();

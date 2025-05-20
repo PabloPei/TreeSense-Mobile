@@ -24,15 +24,6 @@ class _LoginPasswordState extends ConsumerState<LoginPassword> {
     if (value.trim().isEmpty) {
       return MessageLoader.get('error_empty_password');
     }
-    if (value.length < 8) {
-      return MessageLoader.get('error_length_password');
-    }
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return MessageLoader.get('error_uppercase_password');
-    }
-    // if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-    //   return MessageLoader.get('error_special_caracter_password');
-    // }
     return null;
   }
 

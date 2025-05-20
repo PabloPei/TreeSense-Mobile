@@ -40,7 +40,7 @@ class TreeCard extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              '${MessageLoader.get('tree_form_createAt')}: ${formattedDate}',
+              '${MessageLoader.get('tree_form_createAt')}: $formattedDate',
               style: AppTextStyles.bodyTextStyle,
             ),
             const SizedBox(height: 5),

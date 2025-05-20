@@ -4,6 +4,7 @@ import 'package:treesense/features/auth/presentation/Widgets/email_field.dart';
 import 'package:treesense/features/auth/presentation/Widgets/password_field.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/core/theme/font_conf.dart';
+import 'package:treesense/core/theme/format.dart';
 
 class LoginForm extends StatelessWidget {
   final TextEditingController emailController;
@@ -28,29 +29,29 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: AppSpacing.xl),
               Image.asset(
                 'assets/logos/home_logo.png',
                 width: 150,
                 height: 150,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 MessageLoader.get('login_description'),
                 style: AppTextStyles.captionTextStyle,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 MessageLoader.get('login_title'),
                 style: AppTextStyles.titleStyle,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: AppSpacing.xl),
               EmailField(emailController),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.sm),
               LoginPassword(passwordController),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.md),
               LoginButton(onPressed: onLogin, isLoading: isLoading),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.sm),
             ],
           ),
         ),

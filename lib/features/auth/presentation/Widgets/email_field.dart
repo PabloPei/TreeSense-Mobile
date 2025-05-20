@@ -16,18 +16,15 @@ class _EmailFieldState extends ConsumerState<EmailField> {
   String? _errorText;
 
   void _validateEmail(String email) {
-    const pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
-    final isValid = RegExp(pattern).hasMatch(email);
-
     setState(() {
       if (email.isEmpty) {
         _errorText = MessageLoader.get("error_empty_email");
-      } else if (!isValid) {
-        _errorText = MessageLoader.get("error_invalid_email");
       } else {
         _errorText = null;
       }
     });
+
+    final isValid = email.isNotEmpty;
 
     ref.read(loginControllerProvider.notifier).setEmailErrorMessage(_errorText);
     ref.read(loginControllerProvider.notifier).setEmailValid(isValid);
