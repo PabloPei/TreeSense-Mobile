@@ -43,4 +43,10 @@ class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.normal,
   );
+
+  static const TextStyle developersMessageStyle = TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.w300,
+    color: Colors.grey,
+  );
 }

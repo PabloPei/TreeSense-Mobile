@@ -43,5 +43,6 @@
     "error_get_last_upload": "Error al recuperar las últimas cargas del usuario",
     "error_unknow": "Error desconocido",
     "user_profile_title": "Perfil de usuario",
-    "language": "Lenguaje"
+    "language": "Lenguaje",
+    "developers_message": "Diseñado y Desarrollado por BPS Technology Consulting"
 }

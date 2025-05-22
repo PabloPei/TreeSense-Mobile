@@ -6,6 +6,7 @@ import 'package:treesense/features/auth/presentation/state/login_controller.dart
 import 'package:treesense/features/auth/presentation/state/login_state.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
+import 'package:treesense/features/auth/presentation/Widgets/developers_message.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -51,14 +52,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final state = ref.watch(loginControllerProvider);
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: LoginForm(
-          emailController: _emailCtrl,
-          passwordController: _passwordCtrl,
-          onLogin: () => _handleLogin(context),
-          isLoading: state.status == LoginStatus.authenticating,
-        ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: LoginForm(
+              emailController: _emailCtrl,
+              passwordController: _passwordCtrl,
+              onLogin: () => _handleLogin(context),
+              isLoading: state.status == LoginStatus.authenticating,
+            ),
+          ),
+          const DevelopersMessage(),
+        ],
       ),
     );
   }
