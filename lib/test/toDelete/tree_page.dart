@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:treesense/core/theme/font_conf.dart';
-import 'package:treesense/features/tree/presentation/widgets/tree_data_step.dart';
-import 'package:treesense/features/tree/presentation/widgets/tree_image_step.dart';
-import 'package:treesense/features/tree/presentation/widgets/tree_summary_step.dart';
+import 'package:treesense/test/toDelete/tree_data_step.dart';
+import 'package:treesense/test/toDelete/tree_image_step.dart';
+import 'package:treesense/test/toDelete/tree_summary_step.dart';
 import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
@@ -25,7 +25,7 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
 
     if (_formKey.currentState?.validate() ?? false) {
       if (ref.watch(treeCensusControllerProvider).step ==
-          TreeCensusFormStep.resume) {
+          TreeCensusFormStep.summary) {
         final saveTreeUseCase = ref.read(treeCensusControllerProvider.notifier);
 
         String responseMessage;
@@ -123,7 +123,7 @@ class TreeCensusFormState extends ConsumerState<TreeCensusForm> {
                       shadowColor: Colors.black45,
                     ),
                     child: Text(
-                      currentStep == TreeCensusFormStep.resume
+                      currentStep == TreeCensusFormStep.summary
                           ? MessageLoader.get("save_tree_form_finish")
                           : MessageLoader.get("save_tree_form_continue"),
                       style: AppTextStyles.bottomTextStyle,

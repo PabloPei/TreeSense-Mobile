@@ -1,12 +1,23 @@
 import 'package:treesense/features/tree/infrastructure/models/tree_impl.dart';
 
-enum TreeCensusFormStep { image, data, resume }
+enum TreeCensusFormStep {
+  typeSelection,
+  location,
+  characteristics,
+  defects,
+  photo,
+  observations,
+  summary,
+}
 
 class TreeCensusState {
   final TreeCensusFormStep step;
   final TreeImpl? treeData;
 
-  TreeCensusState({this.step = TreeCensusFormStep.image, this.treeData});
+  TreeCensusState({
+    this.step = TreeCensusFormStep.typeSelection,
+    this.treeData,
+  });
 
   TreeCensusState copyWith({TreeCensusFormStep? step, TreeImpl? treeData}) {
     return TreeCensusState(

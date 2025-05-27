@@ -31,7 +31,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () => context.pop(),
-          tooltip: 'Volver',
+          tooltip: MessageLoader.get('save_tree_form_back'),
         ),
         title: Text(
           MessageLoader.get('user_profile_title'),

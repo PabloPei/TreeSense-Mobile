@@ -49,4 +49,20 @@ class AppTextStyles {
     fontWeight: FontWeight.w300,
     color: Colors.grey,
   );
+
+  static final TextStyle typeButtonStyle = GoogleFonts.quicksand(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle formStepTitleStyle = GoogleFonts.montserrat(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle buttonStyle = GoogleFonts.montserrat(
+    fontSize: 35,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 }
