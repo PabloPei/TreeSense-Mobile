@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:treesense/core/theme/format.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/features/auth/presentation/state/login_controller.dart';
+import 'package:treesense/core/theme/app_theme.dart';
 
 class LoginPassword extends ConsumerStatefulWidget {
   final TextEditingController controller;
@@ -60,10 +62,10 @@ class _LoginPasswordState extends ConsumerState<LoginPassword> {
         contentPadding: const EdgeInsets.only(left: 30),
         errorText: _errorText,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
         ),
       ),
     );

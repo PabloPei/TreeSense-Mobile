@@ -11,7 +11,11 @@ import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 import 'package:treesense/shared/widgets/button_widget.dart';
 import 'package:treesense/features/tree/presentation/widgets/census_progress_header.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
+import 'package:treesense/core/theme/format.dart';
 
+//////////////////////////////
+//UNTESTED FOR CAMERA PHOTOS//
+//////////////////////////////
 class TreeCensusPhotoPage extends ConsumerWidget {
   const TreeCensusPhotoPage({super.key});
 
@@ -46,29 +50,43 @@ class TreeCensusPhotoPage extends ConsumerWidget {
               MessageLoader.get('step_seven'),
             ],
           ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () => _pickImage(context, ref),
-            icon: const Icon(Icons.camera_alt),
-            label: Text(MessageLoader.get("save_tree_form_image")),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primarySeedColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => _pickImage(context, ref),
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: photoButtonColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/icons/camera.png',
+                        height: 70,
+                        width: 70,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  if (imagePath != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                      child: Image.file(
+                        File(imagePath),
+                        height: 200,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                  else
+                    Text(MessageLoader.get("save_tree_form_no_image")),
+                ],
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          if (imagePath != null)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.file(
-                File(imagePath),
-                height: 200,
-                fit: BoxFit.contain,
-              ),
-            ),
-          const Spacer(),
           ButtonWidget(
             text: MessageLoader.get('save_tree_form_continue'),
             color: primarySeedColor,

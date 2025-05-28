@@ -20,11 +20,11 @@ class TreeSummaryStep extends ConsumerWidget {
         ),
         SizedBox(height: 10),
         Text(
-          '${MessageLoader.get("save_tree_form_height")}: ${data?.height?.toStringAsFixed(2) ?? '-'} m',
+          '${MessageLoader.get("save_tree_form_height")}: ${data?.height.toStringAsFixed(2) ?? '-'} m',
         ),
         SizedBox(height: 10),
         Text(
-          '${MessageLoader.get("save_tree_form_diameter")}: ${data?.diameter?.toStringAsFixed(2) ?? '-'} m',
+          '${MessageLoader.get("save_tree_form_diameter")}: ${data?.diameter.toStringAsFixed(2) ?? '-'} m',
         ),
         SizedBox(height: 10),
         Text(

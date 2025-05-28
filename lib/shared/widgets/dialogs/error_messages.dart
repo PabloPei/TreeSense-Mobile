@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treesense/core/theme/format.dart';
 
 class BlockErrorDialog {
   static void showErrorDialog(
@@ -13,7 +14,7 @@ class BlockErrorDialog {
             title: Text(title),
             content: Text(message),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(AppBorderRadius.lg),
             ),
             actions: [
               TextButton(
@@ -38,7 +39,9 @@ class WarningMessage extends StatelessWidget {
       child: Card(
         color: Colors.amber[100],
         margin: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

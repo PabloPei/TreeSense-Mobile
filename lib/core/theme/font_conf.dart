@@ -65,4 +65,15 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
+  static final TextStyle summaryTitleStyle = GoogleFonts.montserrat(
+    fontSize: 16,
+    color: Colors.black87,
+  );
+
+  static final TextStyle summaryBodyStyle = GoogleFonts.montserrat(
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
 }

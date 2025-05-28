@@ -36,7 +36,8 @@ class TreeCensusDefectsPage extends ConsumerWidget {
             text: MessageLoader.get('save_tree_form_continue'),
             color: primarySeedColor,
             onPressed: () {
-              final isValid = true;
+              final isValid =
+                  true; //TODO cambiar todos estos true hardcodeados por las funciones que validen
               //final isValid = controller.validateDefects();
               if (isValid) {
                 context.push('/tree-census/photo');

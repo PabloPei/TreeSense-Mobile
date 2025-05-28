@@ -45,7 +45,7 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => context.go('/tree-census/type'),
+                    onPressed: () => context.push('/tree-census/type'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primarySeedColor,
                       shape: RoundedRectangleBorder(

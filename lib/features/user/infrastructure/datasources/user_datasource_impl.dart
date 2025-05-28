@@ -39,7 +39,7 @@ class UserDatasourceImpl implements UserDatasource {
   }
 }
 
-//TODO: borrar funcion de prueba
+//TODO: borrar en prod
 class FakeUserDatasource implements UserDatasource {
   @override
   Future<User> getCurrentUser() async {

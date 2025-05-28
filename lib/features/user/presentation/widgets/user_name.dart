@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treesense/core/theme/app_theme.dart';
 import 'package:treesense/core/theme/font_conf.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/core/theme/format.dart';
@@ -12,7 +13,11 @@ class UserNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.person_outline, size: AppIconSizes.profile),
+        const Icon(
+          Icons.person_outline,
+          size: AppIconSizes.profile,
+          color: profileDetailsColor,
+        ),
         const SizedBox(width: AppSpacing.md),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -19,7 +19,9 @@ class TreeCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(10.0),
       elevation: 4.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
