@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'package:treesense/core/theme/app_theme.dart';
-import 'package:treesense/core/theme/font_conf.dart';
+//import 'package:treesense/core/theme/font_conf.dart';
 import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
@@ -12,6 +12,7 @@ import 'package:treesense/shared/widgets/button_widget.dart';
 import 'package:treesense/features/tree/presentation/widgets/census_progress_header.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 import 'package:treesense/core/theme/format.dart';
+import 'package:treesense/shared/widgets/round_button_widget.dart';
 
 //////////////////////////////
 //UNTESTED FOR CAMERA PHOTOS//
@@ -52,24 +53,13 @@ class TreeCensusPhotoPage extends ConsumerWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
                 children: [
-                  GestureDetector(
+                  RoundButtonWidget(
                     onTap: () => _pickImage(context, ref),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: photoButtonColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/icons/camera.png',
-                        height: 70,
-                        width: 70,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    color: photoButtonColor,
+                    imageAsset: 'assets/icons/camera.png',
                   ),
                   const SizedBox(height: 24),
                   if (imagePath != null)
