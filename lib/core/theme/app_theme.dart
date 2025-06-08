@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color primarySeedColor = Color(0xFF689F38);
+const Color primarySeedColor = Color.fromARGB(255, 91, 128, 59);
 
 const Color errorColor = Color(0xFFB00020);
 
@@ -17,4 +17,4 @@ final List<Color> greenShades = const [
 
 const Color photoButtonColor = Color.fromARGB(255, 2, 173, 45);
 
-const Color profileDetailsColor = Color(0xFF00695C);
+const Color profileDetailsColor = Color.fromARGB(255, 91, 128, 59);

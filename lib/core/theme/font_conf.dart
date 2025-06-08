@@ -18,7 +18,7 @@ class AppTextStyles {
   );
 
   static const TextStyle bottomTextStyle = TextStyle(
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );

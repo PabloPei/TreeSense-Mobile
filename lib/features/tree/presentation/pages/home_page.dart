@@ -49,11 +49,11 @@ class HomePage extends ConsumerWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primarySeedColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                        borderRadius: BorderRadius.circular(AppBorderRadius.xl),
                       ),
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 52,
-                        vertical: 18,
+                        horizontal: AppSpacing.lg,
+                        vertical: AppSpacing.md,
                       ),
                     ),
                     child: Text(
@@ -65,31 +65,22 @@ class HomePage extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.md),
 
-              // Title: Últimas cargas + Filtro
+              //Últimas cargas
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
+                  horizontal: AppSpacing.sm,
+                  vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(AppBorderRadius.md),
                 ),
                 child: Row(
                   children: [
-                    const SizedBox(width: 5),
                     Expanded(
                       child: Text(
                         MessageLoader.get('last_uploads_title'),
                         style: AppTextStyles.titleStyle,
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        // TODO: Agregá lógica de filtro acá
-                      },
-                      icon: const Icon(Icons.filter_list, color: Colors.grey),
-                      tooltip: 'Filtrar',
                     ),
                   ],
                 ),
