@@ -10,8 +10,14 @@ import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 import 'package:treesense/shared/widgets/button_widget.dart';
 import 'package:treesense/core/theme/app_theme.dart';
+import 'package:treesense/test/temp_main_form.dart';
 
 enum Barrio { centro, norte, sur }
+enum Ubicacion_Plantera { Centrada, Esquina, Borde }
+enum Forma_Plantera { Circular, Cuadrada, Rectangular }
+enum Nivel_Plantera { Raz, Vereda, Elevada }
+
+
 
 class TreeCensusLocationPage extends ConsumerStatefulWidget {
   const TreeCensusLocationPage({super.key});
@@ -21,20 +27,28 @@ class TreeCensusLocationPage extends ConsumerStatefulWidget {
       _TreeCensusLocationPageState();
 }
 
-class _TreeCensusLocationPageState
-    extends ConsumerState<TreeCensusLocationPage> {
+class _TreeCensusLocationPageState extends ConsumerState<TreeCensusLocationPage> {
   Barrio? selectedBarrio;
   String? _altura;
   bool? arbolSeco;
+  String? _anchoVereda;
+
+  Ubicacion_Plantera? _ubicacionPlantera;
+  Forma_Plantera? _formaPlantera;
+  Nivel_Plantera? _nivelPlantera;
+  String? _dimensionesPlantera;
+
+  bool get hayPlantera {
+    final type = ref.watch(treeTypeProvider);
+    return type == TreeCensusType.arbolConPlantera || type == TreeCensusType.planteraVacia;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CensusProgressHeader(
                 currentStep: TreeCensusFormStep.location,
@@ -49,6 +63,7 @@ class _TreeCensusLocationPageState
                 ],
               ),
               const SizedBox(height: AppSpacing.lg),
+
               DropdownField<Barrio>(
                 label: 'Barrio',
                 items: Barrio.values,
@@ -56,15 +71,62 @@ class _TreeCensusLocationPageState
                 onChanged: (value) => setState(() => selectedBarrio = value),
                 itemLabel: (b) => b.name,
               ),
+
+          
+
               const SizedBox(height: AppSpacing.lg),
+
+              if (hayPlantera) ...[
+                DropdownField<Ubicacion_Plantera>(
+                  label: 'Ubicación de plantera',
+                  items: Ubicacion_Plantera.values,
+                  selected: _ubicacionPlantera,
+                  onChanged: (value) => setState(() => _ubicacionPlantera = value),
+                  itemLabel: (u) => u.name,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+
+                DropdownField<Forma_Plantera>(
+                  label: 'Forma de plantera',
+                  items: Forma_Plantera.values,
+                  selected: _formaPlantera,
+                  onChanged: (val) => setState(() => _formaPlantera = val),
+                  itemLabel: (f) => f.name,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+
+                DropdownField<Nivel_Plantera>(
+                  label: 'Nivel de plantera',
+                  items: Nivel_Plantera.values,
+                  selected: _nivelPlantera,
+                  onChanged: (values) => setState(() => _nivelPlantera = values),
+                  itemLabel: (n) => n.name,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+
+                NumericField(
+                  label: 'Dimensiones de plantera (m²)',
+                  initialValue: _dimensionesPlantera,
+                  onChanged: (val) => setState(() => _dimensionesPlantera = val),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+              ],
+
               NumericField(
                 label: 'Altura estimada (m)',
                 initialValue: _altura,
-                onChanged: (val) {
-                  setState(() => _altura = val);
-                },
+                onChanged: (val) => setState(() => _altura = val),
+              ),
+
+                const SizedBox(height: AppSpacing.lg),
+
+              NumericField(
+                label: 'Ancho de vereda (m)',
+                initialValue: _anchoVereda,
+                onChanged: (val) => setState(() => _anchoVereda = val),
               ),
               const SizedBox(height: AppSpacing.lg),
+
               OptionSelector<bool>(
                 label: '¿Seco en pie?',
                 options: const [true, false],
@@ -72,14 +134,18 @@ class _TreeCensusLocationPageState
                 onChanged: (val) => setState(() => arbolSeco = val),
                 optionLabel: (b) => b ? 'Sí' : 'No',
               ),
+
               const Spacer(),
+
               ButtonWidget(
                 text: MessageLoader.get('save_tree_form_continue'),
                 color: primarySeedColor,
-                onPressed: () => context.push('/tree-census/characteristics'),
+                onPressed: () {
+                  context.push('/tree-census/characteristics');
+                },
               ),
             ],
-          ),
+          
         ),
       ),
     );
