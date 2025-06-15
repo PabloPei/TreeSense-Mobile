@@ -4,6 +4,8 @@ const Color primarySeedColor = Color.fromARGB(255, 91, 128, 59);
 
 const Color errorColor = Color(0xFFB00020);
 
+const Color LogOutColor = Color(0xFFB00020);
+
 const Color goldBorderColor = Color(0xFFFFD700);
 
 final List<Color> greenShades = const [

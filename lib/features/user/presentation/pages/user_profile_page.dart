@@ -7,6 +7,7 @@ import 'package:treesense/features/user/presentation/widgets/user_photo.dart';
 import 'package:treesense/features/user/presentation/widgets/user_name.dart';
 import 'package:treesense/features/user/presentation/widgets/user_email.dart';
 import 'package:treesense/features/user/presentation/widgets/user_language.dart';
+import 'package:treesense/features/user/presentation/widgets/user_logout.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 import 'package:treesense/shared/widgets/dialogs/show_photo_dialog.dart';
@@ -48,13 +49,16 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_left),
-                    onPressed: () => context.pop(),
-                    tooltip: MessageLoader.get('save_tree_form_back'),
-                  ),
+                // Header con botón de back
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.chevron_left),
+                      onPressed: () => context.pop(),
+                      tooltip: MessageLoader.get('save_tree_form_back'),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: AppSpacing.lg),
@@ -104,6 +108,17 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                   alignment: Alignment.centerLeft,
                   child: UserLanguageWidget(language: user.language),
                 ),
+
+                const Spacer(),
+
+                // Usar el botón de logout del módulo
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  child: const LogoutButton(),
+                ),
+
+                const SizedBox(height: AppSpacing.lg),
               ],
             );
           },
