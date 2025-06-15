@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:treesense/features/tree/presentation/widgets/goToCensusStep';
 import 'package:treesense/test/temp_main_form.dart';
 import 'package:treesense/core/theme/format.dart';
 import 'package:treesense/features/tree/presentation/widgets/entry_type_button.dart';
@@ -24,7 +25,7 @@ class TypeSelectionPage extends ConsumerWidget {
         child: Column(
           children: [
             CensusProgressHeader(
-              currentStep: TreeCensusFormStep.typeSelection,
+              currentStep: TreeCensusFormStep.typeSelection, 
               steps: [
                 MessageLoader.get('step_one'),
                 MessageLoader.get('step_two'),
@@ -34,6 +35,7 @@ class TypeSelectionPage extends ConsumerWidget {
                 MessageLoader.get('step_six'),
                 MessageLoader.get('step_seven'),
               ],
+              onStepTapped: (index) => goToCensusStep(context, index),
             ),
             Expanded(
               child: SingleChildScrollView(

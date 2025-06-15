@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:treesense/core/theme/app_theme.dart';
 import 'package:treesense/features/tree/presentation/widgets/census_progress_header.dart';
+import 'package:treesense/features/tree/presentation/widgets/goToCensusStep';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/features/tree/presentation/state/tree_state.dart';
 import 'package:treesense/shared/widgets/button_widget.dart';
@@ -22,7 +23,7 @@ class TreeCensusSummaryPage extends ConsumerWidget {
         child: Column(
           children: [
             CensusProgressHeader(
-              currentStep: TreeCensusFormStep.summary,
+              currentStep: TreeCensusFormStep.summary, 
               steps: [
                 MessageLoader.get('step_one'),
                 MessageLoader.get('step_two'),
@@ -32,6 +33,7 @@ class TreeCensusSummaryPage extends ConsumerWidget {
                 MessageLoader.get('step_six'),
                 MessageLoader.get('step_seven'),
               ],
+              onStepTapped: (index) => goToCensusStep(context, index),
             ),
             const SizedBox(height: 12),
             Expanded(

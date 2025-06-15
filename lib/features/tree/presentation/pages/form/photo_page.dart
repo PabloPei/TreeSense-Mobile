@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:treesense/core/theme/app_theme.dart';
 //import 'package:treesense/core/theme/font_conf.dart';
 import 'package:treesense/features/tree/presentation/state/tree_controller.dart';
+import 'package:treesense/features/tree/presentation/widgets/goToCensusStep';
 import 'package:treesense/shared/utils/app_utils.dart';
 import 'package:treesense/shared/widgets/dialogs/error_messages.dart';
 import 'package:treesense/shared/widgets/button_widget.dart';
@@ -40,17 +41,18 @@ class TreeCensusPhotoPage extends ConsumerWidget {
       body: Column(
         children: [
           CensusProgressHeader(
-            currentStep: TreeCensusFormStep.photo,
-            steps: [
-              MessageLoader.get('step_one'),
-              MessageLoader.get('step_two'),
-              MessageLoader.get('step_three'),
-              MessageLoader.get('step_four'),
-              MessageLoader.get('step_five'),
-              MessageLoader.get('step_six'),
-              MessageLoader.get('step_seven'),
-            ],
-          ),
+              currentStep: TreeCensusFormStep.photo,
+              steps: [
+                MessageLoader.get('step_one'),
+                MessageLoader.get('step_two'),
+                MessageLoader.get('step_three'),
+                MessageLoader.get('step_four'),
+                MessageLoader.get('step_five'),
+                MessageLoader.get('step_six'),
+                MessageLoader.get('step_seven'),
+              ],
+              onStepTapped: (index) => goToCensusStep(context, index),
+            ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppSpacing.md),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:treesense/core/theme/format.dart';
 import 'package:treesense/features/tree/presentation/widgets/census_progress_header.dart';
 import 'package:treesense/features/tree/presentation/widgets/dropdown_field.dart';
+import 'package:treesense/features/tree/presentation/widgets/goToCensusStep';
 import 'package:treesense/features/tree/presentation/widgets/numeric_field.dart';
 import 'package:treesense/features/tree/presentation/widgets/option_selector_field.dart';
 import 'package:treesense/shared/utils/app_utils.dart';
@@ -51,7 +52,7 @@ class _TreeCensusLocationPageState extends ConsumerState<TreeCensusLocationPage>
           padding: const EdgeInsets.all(AppSpacing.md),
             children: [
               CensusProgressHeader(
-                currentStep: TreeCensusFormStep.location,
+                currentStep: TreeCensusFormStep.location, 
                 steps: [
                   MessageLoader.get('step_one'),
                   MessageLoader.get('step_two'),
@@ -61,7 +62,8 @@ class _TreeCensusLocationPageState extends ConsumerState<TreeCensusLocationPage>
                   MessageLoader.get('step_six'),
                   MessageLoader.get('step_seven'),
                 ],
-              ),
+                onStepTapped: (index) => goToCensusStep(context, index),
+            ),
               const SizedBox(height: AppSpacing.lg),
 
               DropdownField<Barrio>(

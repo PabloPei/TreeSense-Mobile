@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+void goToCensusStep(BuildContext context, int index) {
+final routes = [
+  '/tree-census/type',
+  '/tree-census/location',
+  '/tree-census/characteristics',
+  '/tree-census/defects',
+  '/tree-census/photo',
+  '/tree-census/observations',
+  '/tree-census/summary',
+];
+
+
+  if (index >= 0 && index < routes.length) {
+    context.go(routes[index]);
+  }
+}

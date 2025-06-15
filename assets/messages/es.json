@@ -55,5 +55,8 @@
     "step_six": "Observaciones",
     "step_seven": "Resumen",
     "incorrect_numeric_format_msg": "Ingrese un número válido",
-    "error_title": "Error al cargar los datos"
+    "error_title": "Error al cargar los datos",
+    "cancel": "Cancelar",
+    "exit": "Salir",
+    "exit_warning_massage": "¿Seguro desea salir del registro? Se perderán los datos no guardados."
 }
